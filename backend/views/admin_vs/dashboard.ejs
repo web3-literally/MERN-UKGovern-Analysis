@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<% include ../partials/head.ejs %>
+
+<body data-sa-theme="4">
+<% include ../partials/header.ejs %>
+<% include ../partials/sidebar.ejs %>
+
+<style>
+    .datepicker-dropdown {
+        font-size: large;
+    }
+</style>
+<section class="content">
+    <div class="content__inner">
+        <header class="content__title">
+            <h1><%= i18n.__('Dashboard') %></h1>
+        </header>
+        <div class="card">
+            <div class="card-body">
+<!--                <div class="form-group">-->
+<!--                    <label>Company Number</label>-->
+<!--                    <input type="text" class="form-control" placeholder="Please input company number" id="txt-company-number">-->
+<!--                    <button class="btn btn-success" onclick="searchCompany()">-->
+<!--                        <i class="zwicon-search"></i> Search-->
+<!--                    </button>-->
+<!--                </div>-->
+<!--                <div class="form-group">-->
+<!--                    <label>Company Number</label>-->
+<!--                    <input type="text" class="form-control" placeholder="Please input company number" id="txt-company-number">-->
+<!--                </div>-->
+
+                <div class="table-responsive">
+                    <table id="search-table" class="table table-bordered text-center">
+                        <thead>
+                        <tr>
+                            <th style="color: yellow">No</th>
+                            <th style="color: yellow">CompanyName</th>
+                            <th style="color: yellow">Company Number</th>
+                            <th style="color: yellow">CountryOfOrigin</th>
+                            <th style="color: yellow">Company URI</th>
+                            <th style="color: yellow">Person Name</th>
+                            <th style="color: yellow">Person Links</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <% for (let k = 0; k < results.length; k++) { %>
+                            <tr id="<%= results[k].id %>" style="">
+                                <td><%= k + 1 %></td>
+                                <td><%= results[k].CompanyName %></td>
+                                <td><%= results[k].CompanyNumber %></td>
+                                <td><%= results[k].CountryOfOrigin %></td>
+                                <td><%= results[k].CompanyURI %></td>
+                                <td><%= results[k].PersonName %></td>
+                                <td><%= results[k].PersonLinks %></td>
+                            </tr>
+                        <% } %>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- remove modal -->
+<div class="modal fade" id="modal_delete_message" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header"></div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <i class="zwicon-info-circle" style="font-size: 7rem"></i>
+                </div>
+                <div class="form-group">
+                    <h3><%= i18n.__('Are you sure to remove?') %></h3>
+                </div>
+                <input type="hidden" id="modal_delete_type">
+                <input type="hidden" id="modal_delete_id">
+                <button type="button" class="btn btn-link" onclick="onDeleteBtn()"><%= i18n.__('Remove') %></button>
+                <button type="button" class="btn btn-link" data-dismiss="modal"><%= i18n.__('Cancel') %></button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<% include ../partials/footer.ejs %>
+<% include ../partials/foot.ejs %>
+<script>
+
+	$(document).ready(function () {
+		$("#search-table").DataTable({
+			aaSorting: [],
+			autoWidth: !1,
+			responsive: !0,
+			lengthMenu: [[15, 40, 100, -1], ["15 Rows", "40 Rows", "100 Rows", "Everything"]],
+			language: {searchPlaceholder: "Search for records..."},
+			sDom: '<"dataTables__top"flB<"dataTables_actions">>rt<"dataTables__bottom"ip><"clear">',
+			buttons: [{extend: "excelHtml5", title: "Export Data"}, {
+				extend: "csvHtml5",
+				title: "Export Data"
+			}, {extend: "print", title: "Material Admin"}],
+			initComplete: function () {
+				let html = '<i class="zwicon-more-h" data-toggle="dropdown"></i>' +
+					'<div class="dropdown-menu dropdown-menu-right">' +
+					'<a data-table-action="print" class="dropdown-item">Print</a>' +
+					'<a data-table-action="fullscreen" class="dropdown-item">Fullscreen</a>' +
+					'<a data-table-action="excel" class="dropdown-item">Excel (.xlsx)</a>' +
+					'<a data-table-action="csv" class="dropdown-item">CSV (.csv)</a>' +
+					'</div>';
+				$(".dataTables_actions").html(html)
+			}
+		});
+		$("body").on("click", "[data-table-action]", function (e) {
+			e.preventDefault();
+			let t = $(this).data("table-action");
+			if ("excel" === t && $("#users-table_wrapper").find(".buttons-excel").click(),
+			"csv" === t && $("#users-table_wrapper").find(".buttons-csv").click(),
+			"print" === t && $("#users-table_wrapper").find(".buttons-print").click(), "fullscreen" === t) {
+				let a = $(this).closest(".card");
+				a.hasClass("card--fullscreen") ? (a.removeClass("card--fullscreen"), $('body').removeClass("data-table-toggled"))
+					: (a.addClass("card--fullscreen"), $('body').addClass("data-table-toggled"))
+			}
+		});
+
+        $("#search-table_filter input").attr('placeholder', 'Search for company number...');
+        let company_number = getUrlParameter('cn');
+        if (company_number) {
+            $("#search-table_filter input").val(company_number);
+        }
+        $("#search-table_filter input").keypress(function (event) {
+          const keycode = (event.keyCode ? event.keyCode : event.which);
+          if (keycode == '13') {
+            const company_number = $("#search-table_filter input").val();
+            window.location.href = '?cn=' + company_number;
+          }
+        });
+	});
+
+    function getUrlParameter(sParam) {
+        let sPageURL = window.location.search.substring(1),
+            sURLVariables = sPageURL.split('&'),
+            sParameterName,
+            i;
+
+        for (i = 0; i < sURLVariables.length; i++) {
+            sParameterName = sURLVariables[i].split('=');
+
+            if (sParameterName[0] === sParam) {
+                return sParameterName[1] === undefined ? true : decodeURIComponent(sParameterName[1]);
+            }
+        }
+    }
+
+    function searchCompany() {
+
+    }
+</script>
+</body>
+</html>

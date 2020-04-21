@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<% include ../partials/head.ejs %>
+<link rel="stylesheet" href="/main/tel-input/css/intlTelInput.css">
+
+<body data-sa-theme="4">
+<% include ../partials/header.ejs %>
+<% include ../partials/sidebar.ejs %>
+<style>
+    #upload_profile_avatar {
+        display: none;
+    }
+
+    #factor2_qr_code img {
+        border: 10px solid white;
+    }
+
+    .profile__info {
+        padding: 1px 30px;
+    }
+
+    #new_profile_phone {
+        padding-left: 81px;
+    }
+</style>
+<section class="content">
+    <div class="content__inner">
+        <header class="content__title">
+            <h1><%= i18n.__('Account Settings') %></h1>
+        </header>
+        <div class="row">
+            <div class="col-lg-2"></div>
+            <div class="col-lg-8">
+                <div class="card profile">
+                    <div class="profile__img">
+                        <img src="<%= user.avatar %>" alt="Profile Avatar" id="profile_avatar">
+                        <input type="file" id="upload_profile_avatar" accept=".png, .jpg, .jpeg, .gif" onchange="previewProfileAvatar(event)">
+                        <a href="javascript:" class="zwicon-camera profile__img__edit" onclick="$('#upload_profile_avatar').click()"></a>
+                    </div>
+
+                    <div class="profile__info">
+                        <ul class="icon-list">
+                            <li><i class="zwicon-user-circle"></i> <%= user.username %></li>
+                            <li><i class="zwicon-mail"></i> <%= user.email %></li>
+                            <li><i class="zwicon-phone"></i> <%= user.phone %></li>
+                            <li>
+                                <button class="btn btn-theme-dark" onclick="saveAvatar()"><%= i18n.__('SAVE') %></button>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-body">
+                        <form class="" id="profile_form">
+                            <div class="form-group">
+                                <label><%= i18n.__('User Name') %></label>
+                                <input type="text" class="form-control" id="profile_user_name" value="<%= user.username %>">
+                            </div>
+                            <div class="form-group">
+                                <label><%= i18n.__('Email Address') %></label>
+                                <input type="email" class="form-control" id="profile_email" value="<%= user.email %>" disabled>
+                            </div>
+                            <div class="form-group">
+                                <label><%= i18n.__('Old Password') %></label>
+                                <input type="password" id="profile_old_password" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label><%= i18n.__('New Password') %></label>
+                                <input type="password" class="form-control" id="profile_new_password">
+                            </div>
+                            <div class="form-group">
+                                <label><%= i18n.__('Confirm New Password') %></label>
+                                <input type="password" class="form-control" id="profile_confirm_password">
+                            </div>
+                            <div class="form-group" style="text-align: center">
+                                <button class="btn btn-outline-danger"><%= i18n.__('Edit Profile') %></button>
+                                <button class="btn btn-outline-secondary" type="button" onclick="location.reload()"><%= i18n.__('Cancel') %></button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-2"></div>
+        </div>
+    </div>
+</section>
+
+<% include ../partials/footer.ejs %>
+<% include ../partials/foot.ejs %>
+<script>
+    let messages = [
+        '<%= i18n.__("First name is empty") %>',  // 0
+        '<%= i18n.__("Last name is empty") %>',  // 1
+        '<%= i18n.__("Old password is empty") %>',  // 2
+        '<%= i18n.__("New password is empty") %>',  // 3
+        '<%= i18n.__("Confirm password is empty") %>',  // 4
+        '<%= i18n.__("Confirm password does not match with password") %>',  // 5
+        '<%= i18n.__("2FA code is needed") %>',  // 6
+        '<%= i18n.__("Activated Your 2FA") %>',  // 7
+        '<%= i18n.__("Failed Activate 2FA") %>',  // 8
+        '<%= i18n.__("Avatar is not changed") %>',  // 9
+        '<%= i18n.__("Phone number format is not valid") %>',  // 10
+        '<%= i18n.__("Phone code is empty") %>',  // 11
+        '<%= i18n.__("Bank number is not valid") %>',  // 12
+        '<%= i18n.__("Confirm email is not valid") %>',  // 13
+        '<%= i18n.__("Wallet address is not valid") %>',  // 14
+    ];
+</script>
+<script src="/main/js/account_settings.js"></script>
+</body>
+</html>
