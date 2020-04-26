@@ -2,13 +2,16 @@
 <html lang="en">
 <% include ../partials/head.ejs %>
 
-<body data-sa-theme="4">
+<body data-sa-theme="1">
 <% include ../partials/header.ejs %>
 <% include ../partials/sidebar.ejs %>
 
 <style>
     .datepicker-dropdown {
         font-size: large;
+    }
+    .search-category option {
+        background-color: #24262D;
     }
 </style>
 <section class="content">
@@ -18,29 +21,184 @@
         </header>
         <div class="card">
             <div class="card-body">
-<!--                <div class="form-group">-->
-<!--                    <label>Company Number</label>-->
-<!--                    <input type="text" class="form-control" placeholder="Please input company number" id="txt-company-number">-->
-<!--                    <button class="btn btn-success" onclick="searchCompany()">-->
-<!--                        <i class="zwicon-search"></i> Search-->
-<!--                    </button>-->
-<!--                </div>-->
-<!--                <div class="form-group">-->
-<!--                    <label>Company Number</label>-->
-<!--                    <input type="text" class="form-control" placeholder="Please input company number" id="txt-company-number">-->
-<!--                </div>-->
+                <div class="d-flex">
+                    <div class="form-group col-md-5">
+                        <label>Search Category</label>
+                        <select class="form-control search-category">
+                            <option>--------------- Company Parameters ---------------</option>
+                            <option value="c_CompanyNumber">CompanyNumber</option>
+                            <option value="c_CompanyName">CompanyName</option>
+                            <option value="c_RegAddress_CareOf">RegAddress_CareOf</option>
+                            <option value="c_RegAddress_POBox">RegAddress_POBox</option>
+                            <option value="c_RegAddress_AddressLine1">RegAddress_AddressLine1</option>
+                            <option value="c_RegAddress_AddressLine2">RegAddress_AddressLine2</option>
+                            <option value="c_RegAddress_PostTown">RegAddress_PostTown</option>
+                            <option value="c_RegAddress_County">RegAddress_County</option>
+                            <option value="c_RegAddress_Country">RegAddress_Country</option>
+                            <option value="c_RegAddress_PostCode">RegAddress_PostCode</option>
+                            <option value="c_CompanyCategory">CompanyCategory</option>
+                            <option value="c_CompanyStatus">CompanyStatus</option>
+                            <option value="c_CountryOfOrigin">CountryOfOrigin</option>
+                            <option value="c_DissolutionDate">DissolutionDate</option>
+                            <option value="c_IncorporationDate">IncorporationDate</option>
+                            <option value="c_Accounts_AccountRefDay">Accounts_AccountRefDay</option>
+                            <option value="c_Accounts_AccountRefMonth">Accounts_AccountRefMonth</option>
+                            <option value="c_Accounts_NextDueDate">Accounts_NextDueDate</option>
+                            <option value="c_Accounts_LastMadeUpDate">Accounts_LastMadeUpDate</option>
+                            <option value="c_Accounts_AccountCategory">Accounts_AccountCategory</option>
+                            <option value="c_Returns_NextDueDate">Returns_NextDueDate</option>
+                            <option value="c_Returns_LastMadeUpDate">Returns_LastMadeUpDate</option>
+                            <option value="c_Mortgages_NumMortCharges">Mortgages_NumMortCharges</option>
+                            <option value="c_Mortgages_NumMortOutstanding">Mortgages_NumMortOutstanding</option>
+                            <option value="c_Mortgages_NumMortPartSatisfied">Mortgages_NumMortPartSatisfied</option>
+                            <option value="c_Mortgages_NumMortSatisfied">Mortgages_NumMortSatisfied</option>
+                            <option value="c_SICCode_SicText_1">SICCode_SicText_1</option>
+                            <option value="c_SICCode_SicText_2">SICCode_SicText_2</option>
+                            <option value="c_SICCode_SicText_3">SICCode_SicText_3</option>
+                            <option value="c_SICCode_SicText_4">SICCode_SicText_4</option>
+                            <option value="c_LimitedPartnerships_NumGenPartners">LimitedPartnerships_NumGenPartners</option>
+                            <option value="c_LimitedPartnerships_NumLimPartners">LimitedPartnerships_NumLimPartners</option>
+                            <option value="c_URI">URI</option>
+                            <option value="c_PreviousName_1_CONDATE">PreviousName_1_CONDATE</option>
+                            <option value="c_PreviousName_1_CompanyName">PreviousName_1_CompanyName</option>
+                            <option value="c_PreviousName_2_CONDATE">PreviousName_2_CONDATE</option>
+                            <option value="c_PreviousName_2_CompanyName">PreviousName_2_CompanyName</option>
+                            <option value="c_PreviousName_3_CONDATE">PreviousName_3_CONDATE</option>
+                            <option value="c_PreviousName_3_CompanyName">PreviousName_3_CompanyName</option>
+                            <option value="c_PreviousName_4_CONDATE">PreviousName_4_CONDATE</option>
+                            <option value="c_PreviousName_4_CompanyName">PreviousName_4_CompanyName</option>
+                            <option value="c_PreviousName_5_CONDATE">PreviousName_5_CONDATE</option>
+                            <option value="c_PreviousName_5_CompanyName">PreviousName_5_CompanyName</option>
+                            <option value="c_PreviousName_6_CONDATE">PreviousName_6_CONDATE</option>
+                            <option value="c_PreviousName_6_CompanyName">PreviousName_6_CompanyName</option>
+                            <option value="c_PreviousName_7_CONDATE">PreviousName_7_CONDATE</option>
+                            <option value="c_PreviousName_7_CompanyName">PreviousName_7_CompanyName</option>
+                            <option value="c_PreviousName_8_CONDATE">PreviousName_8_CONDATE</option>
+                            <option value="c_PreviousName_8_CompanyName">PreviousName_8_CompanyName</option>
+                            <option value="c_PreviousName_9_CONDATE">PreviousName_9_CONDATE</option>
+                            <option value="c_PreviousName_9_CompanyName">PreviousName_9_CompanyName</option>
+                            <option value="c_PreviousName_10_CONDATE">PreviousName_10_CONDATE</option>
+                            <option value="c_PreviousName_10_CompanyName">PreviousName_10_CompanyName</option>
+                            <option value="c_ConfStmtNextDueDate">ConfStmtNextDueDate</option>
+                            <option value="c_ConfStmtLastMadeUpDate">ConfStmtLastMadeUpDate</option>
+                            <option>--------------- Person Parameters ---------------</option>
+                            <option value="p_address_line_1">address_line_1</option>
+                            <option value="p_address_line_2">address_line_2</option>
+                            <option value="p_country">country</option>
+                            <option value="p_locality">locality</option>
+                            <option value="p_postal_code">postal_code</option>
+                            <option value="p_premises">premises</option>
+                            <option value="p_region">region</option>
+                            <option value="p_ceased_on">ceased_on</option>
+                            <option value="p_country_of_residence">country_of_residence</option>
+                            <option value="p_date_of_birth_month">date_of_birth_month</option>
+                            <option value="p_date_of_birth_year">date_of_birth_year</option>
+                            <option value="p_etag">etag</option>
+                            <option value="p_kind">kind</option>
+                            <option value="p_links_self">links_self</option>
+                            <option value="p_name">name</option>
+                            <option value="p_forename">forename</option>
+                            <option value="p_middle_name">middle_name</option>
+                            <option value="p_surname">surname</option>
+                            <option value="p_name_title">name_title</option>
+                            <option value="p_nationality">nationality</option>
+                            <option value="p_natures_of_control">natures_of_control</option>
+                            <option value="p_notified_on">notified_on</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-md-5">
+                        <label>Search Value</label>
+                        <input type="text" class="form-control search-value" placeholder="Input search value...">
+                    </div>
+                    <div class="col-md-2">
+                        <button class="btn btn-success" style="margin-top: 2rem;" onclick="searchCompany()">
+                            <i class="zwicon-search"></i> Search
+                        </button>
+                    </div>
+                </div>
 
                 <div class="table-responsive">
                     <table id="search-table" class="table table-bordered text-center">
                         <thead>
-                        <tr>
-                            <th style="color: yellow">No</th>
-                            <th style="color: yellow">CompanyName</th>
-                            <th style="color: yellow">Company Number</th>
-                            <th style="color: yellow">CountryOfOrigin</th>
-                            <th style="color: yellow">Company URI</th>
-                            <th style="color: yellow">Person Name</th>
-                            <th style="color: yellow">Person Links</th>
+                        <tr style="color: yellow">
+                            <th>No</th>
+                            <th>CompanyName</th>
+                            <th>CompanyNumber</th>
+                            <th>RegAddress_CareOf</th>
+                            <th>RegAddress_POBox</th>
+                            <th>RegAddress_AddressLine1</th>
+                            <th>RegAddress_AddressLine2</th>
+                            <th>RegAddress_PostTown</th>
+                            <th>RegAddress_County</th>
+                            <th>RegAddress_Country</th>
+                            <th>RegAddress_PostCode</th>
+                            <th>CompanyCategory</th>
+                            <th>CompanyStatus</th>
+                            <th>CountryOfOrigin</th>
+                            <th>DissolutionDate</th>
+                            <th>IncorporationDate</th>
+                            <th>Accounts_AccountRefDay</th>
+                            <th>Accounts_AccountRefMonth</th>
+                            <th>Accounts_NextDueDate</th>
+                            <th>Accounts_LastMadeUpDate</th>
+                            <th>Accounts_AccountCategory</th>
+                            <th>Returns_NextDueDate</th>
+                            <th>Returns_LastMadeUpDate</th>
+                            <th>Mortgages_NumMortCharges</th>
+                            <th>Mortgages_NumMortOutstanding</th>
+                            <th>Mortgages_NumMortPartSatisfied</th>
+                            <th>Mortgages_NumMortSatisfied</th>
+                            <th>SICCode_SicText_1</th>
+                            <th>SICCode_SicText_2</th>
+                            <th>SICCode_SicText_3</th>
+                            <th>SICCode_SicText_4</th>
+                            <th>LimitedPartnerships_NumGenPartners</th>
+                            <th>LimitedPartnerships_NumLimPartners</th>
+                            <th>URI</th>
+                            <th>PreviousName_1_CONDATE</th>
+                            <th>PreviousName_1_CompanyName</th>
+                            <th>PreviousName_2_CONDATE</th>
+                            <th>PreviousName_2_CompanyName</th>
+                            <th>PreviousName_3_CONDATE</th>
+                            <th>PreviousName_3_CompanyName</th>
+                            <th>PreviousName_4_CONDATE</th>
+                            <th>PreviousName_4_CompanyName</th>
+                            <th>PreviousName_5_CONDATE</th>
+                            <th>PreviousName_5_CompanyName</th>
+                            <th>PreviousName_6_CONDATE</th>
+                            <th>PreviousName_6_CompanyName</th>
+                            <th>PreviousName_7_CONDATE</th>
+                            <th>PreviousName_7_CompanyName</th>
+                            <th>PreviousName_8_CONDATE</th>
+                            <th>PreviousName_8_CompanyName</th>
+                            <th>PreviousName_9_CONDATE</th>
+                            <th>PreviousName_9_CompanyName</th>
+                            <th>PreviousName_10_CONDATE</th>
+                            <th>PreviousName_10_CompanyName</th>
+                            <th>ConfStmtNextDueDate</th>
+                            <th>ConfStmtLastMadeUpDate</th>
+                            <th>address_line_1</th>
+                            <th>address_line_2</th>
+                            <th>country</th>
+                            <th>locality</th>
+                            <th>postal_code</th>
+                            <th>premises</th>
+                            <th>region</th>
+                            <th>ceased_on</th>
+                            <th>country_of_residence</th>
+                            <th>date_of_birth_month</th>
+                            <th>date_of_birth_year</th>
+                            <th>etag</th>
+                            <th>kind</th>
+                            <th>links_self</th>
+                            <th>name</th>
+                            <th>forename</th>
+                            <th>middle_name</th>
+                            <th>surname</th>
+                            <th>name_title</th>
+                            <th>nationality</th>
+                            <th>natures_of_control</th>
+                            <th>notified_on</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -49,10 +207,81 @@
                                 <td><%= k + 1 %></td>
                                 <td><%= results[k].CompanyName %></td>
                                 <td><%= results[k].CompanyNumber %></td>
+                                <td><%= results[k].RegAddress_CareOf %></td>
+                                <td><%= results[k].RegAddress_POBox %></td>
+                                <td><%= results[k].RegAddress_AddressLine1 %></td>
+                                <td><%= results[k].RegAddress_AddressLine2 %></td>
+                                <td><%= results[k].RegAddress_PostTown %></td>
+                                <td><%= results[k].RegAddress_County %></td>
+                                <td><%= results[k].RegAddress_Country %></td>
+                                <td><%= results[k].RegAddress_PostCode %></td>
+                                <td><%= results[k].CompanyCategory %></td>
+                                <td><%= results[k].CompanyStatus %></td>
                                 <td><%= results[k].CountryOfOrigin %></td>
-                                <td><%= results[k].CompanyURI %></td>
-                                <td><%= results[k].PersonName %></td>
-                                <td><%= results[k].PersonLinks %></td>
+                                <td><%= results[k].DissolutionDate %></td>
+                                <td><%= results[k].IncorporationDate %></td>
+                                <td><%= results[k].Accounts_AccountRefDay %></td>
+                                <td><%= results[k].Accounts_AccountRefMonth %></td>
+                                <td><%= results[k].Accounts_NextDueDate %></td>
+                                <td><%= results[k].Accounts_LastMadeUpDate %></td>
+                                <td><%= results[k].Accounts_AccountCategory %></td>
+                                <td><%= results[k].Returns_NextDueDate %></td>
+                                <td><%= results[k].Returns_LastMadeUpDate %></td>
+                                <td><%= results[k].Mortgages_NumMortCharges %></td>
+                                <td><%= results[k].Mortgages_NumMortOutstanding %></td>
+                                <td><%= results[k].Mortgages_NumMortPartSatisfied %></td>
+                                <td><%= results[k].Mortgages_NumMortSatisfied %></td>
+                                <td><%= results[k].SICCode_SicText_1 %></td>
+                                <td><%= results[k].SICCode_SicText_2 %></td>
+                                <td><%= results[k].SICCode_SicText_3 %></td>
+                                <td><%= results[k].SICCode_SicText_4 %></td>
+                                <td><%= results[k].LimitedPartnerships_NumGenPartners %></td>
+                                <td><%= results[k].LimitedPartnerships_NumLimPartners %></td>
+                                <td><%= results[k].URI %></td>
+                                <td><%= results[k].PreviousName_1_CONDATE %></td>
+                                <td><%= results[k].PreviousName_1_CompanyName %></td>
+                                <td><%= results[k].PreviousName_2_CONDATE %></td>
+                                <td><%= results[k].PreviousName_2_CompanyName %></td>
+                                <td><%= results[k].PreviousName_3_CONDATE %></td>
+                                <td><%= results[k].PreviousName_3_CompanyName %></td>
+                                <td><%= results[k].PreviousName_4_CONDATE %></td>
+                                <td><%= results[k].PreviousName_4_CompanyName %></td>
+                                <td><%= results[k].PreviousName_5_CONDATE %></td>
+                                <td><%= results[k].PreviousName_5_CompanyName %></td>
+                                <td><%= results[k].PreviousName_6_CONDATE %></td>
+                                <td><%= results[k].PreviousName_6_CompanyName %></td>
+                                <td><%= results[k].PreviousName_7_CONDATE %></td>
+                                <td><%= results[k].PreviousName_7_CompanyName %></td>
+                                <td><%= results[k].PreviousName_8_CONDATE %></td>
+                                <td><%= results[k].PreviousName_8_CompanyName %></td>
+                                <td><%= results[k].PreviousName_9_CONDATE %></td>
+                                <td><%= results[k].PreviousName_9_CompanyName %></td>
+                                <td><%= results[k].PreviousName_10_CONDATE %></td>
+                                <td><%= results[k].PreviousName_10_CompanyName %></td>
+                                <td><%= results[k].ConfStmtNextDueDate %></td>
+                                <td><%= results[k].ConfStmtLastMadeUpDate %></td>
+                                <td><%= results[k].address_line_1 %></td>
+                                <td><%= results[k].address_line_2 %></td>
+                                <td><%= results[k].country %></td>
+                                <td><%= results[k].locality %></td>
+                                <td><%= results[k].postal_code %></td>
+                                <td><%= results[k].premises %></td>
+                                <td><%= results[k].region %></td>
+                                <td><%= results[k].ceased_on %></td>
+                                <td><%= results[k].country_of_residence %></td>
+                                <td><%= results[k].date_of_birth_month %></td>
+                                <td><%= results[k].date_of_birth_year %></td>
+                                <td><%= results[k].etag %></td>
+                                <td><%= results[k].kind %></td>
+                                <td><%= results[k].links_self %></td>
+                                <td><%= results[k].name %></td>
+                                <td><%= results[k].forename %></td>
+                                <td><%= results[k].middle_name %></td>
+                                <td><%= results[k].surname %></td>
+                                <td><%= results[k].name_title %></td>
+                                <td><%= results[k].nationality %></td>
+                                <td><%= results[k].natures_of_control %></td>
+                                <td><%= results[k].notified_on %></td>
                             </tr>
                         <% } %>
                         </tbody>
@@ -123,18 +352,15 @@
 			}
 		});
 
-        $("#search-table_filter input").attr('placeholder', 'Search for company number...');
-        let company_number = getUrlParameter('cn');
-        if (company_number) {
-            $("#search-table_filter input").val(company_number);
+        $("#search-table_filter input").attr('placeholder', 'Search in table...');
+        let search_value = getUrlParameter('sv');
+        if (search_value) {
+            $(".search-value").val(search_value);
         }
-        $("#search-table_filter input").keypress(function (event) {
-          const keycode = (event.keyCode ? event.keyCode : event.which);
-          if (keycode == '13') {
-            const company_number = $("#search-table_filter input").val();
-            window.location.href = '?cn=' + company_number;
-          }
-        });
+        let search_category = getUrlParameter('sc');
+        if (search_category) {
+            $(".search-category").val(search_category);
+        }
 	});
 
     function getUrlParameter(sParam) {
@@ -153,7 +379,13 @@
     }
 
     function searchCompany() {
-
+        const search_value = $(".search-value").val();
+        const search_category = $(".search-category").val();
+        if (search_category != '--------------- Company Parameters ---------------'
+                  && search_category != '--------------- Person Parameters ---------------'
+                  && search_value) {
+		    window.location.href = '?sc=' + search_category + "&sv=" + search_value;
+        }
     }
 </script>
 </body>
