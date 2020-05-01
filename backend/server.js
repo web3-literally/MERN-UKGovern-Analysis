@@ -62,10 +62,12 @@ db.sequelize.sync().then(() => {
         req.db = db;
         next();
     };
-    app.use('/', attachDB, user_route);
-    app.use('/auth', attachDB, auth_route);
-    app.use('/admin', attachDB, admin_route);
-    app.use('/api', attachDB, api_route);
+
+    app.use('/', attachDB, admin_route);
+    // app.use('/', attachDB, user_route);
+    // app.use('/auth', attachDB, auth_route);
+    // app.use('/admin', attachDB, admin_route);
+    // app.use('/api', attachDB, api_route);
 
     /**
      * Error Routes

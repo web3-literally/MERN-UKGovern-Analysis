@@ -4,8 +4,6 @@ let fs = require('fs');
 
 let db = require('../models');
 let UserModel = db.users;
-let CompanyModel = db.company;
-let PersonModel = db.person;
 
 Object.defineProperty(Array.prototype, 'flat', {
     value: function(depth = 1) {
@@ -14,6 +12,8 @@ Object.defineProperty(Array.prototype, 'flat', {
         }, []);
     }
 });
+
+let AccountDataModels = [db.account_2020_04];
 
 let CompanyAccountModels =
   [ db.company_account_5, db.company_account_10, db.company_account_15, db.company_account_20, db.company_account_25,
@@ -294,12 +294,13 @@ module.exports = BaseController.extend({
                 }
 
                 let companyMap = {};
+                let accountDataMap = {};
                 let people = [];
 
                 // Execute queries for each table group, with indices
                 const [ companyAccountGroups, companyDateGroups, companyMortgageGroups, companyPreviousNameGroups,
-                    companyRegAddressGroups, companySICCodeGroups, companySummaryGroups,
-                    personAddressGroups, personDateGroups, personNameGroups, personSummaryGroups ] = await Promise.all(
+                    companyRegAddressGroups, companySICCodeGroups, companySummaryGroups, personAddressGroups,
+                    personDateGroups, personNameGroups, personSummaryGroups, AccountDataGroups ] = await Promise.all(
                   [
                       Promise.all(company_table_indices.map(index => CompanyAccountModels[index].findAll({
                           where: { id: company_indices }, order: [['CompanyNumber', 'ASC']]
@@ -334,17 +335,21 @@ module.exports = BaseController.extend({
                       }))),
                       Promise.all(person_table_indices.map(index => PersonSummaryModels[index].findAll({
                           where: { id: person_indices }, order: [['id', 'ASC']]
-                      })))
+                      }))),
+
+                      Promise.all(AccountDataModels.map(model => model.findAll({
+                          where: { company_number: companyNumberArray }, order: [['id', 'ASC']]
+                      }))),
                   ]);
 
                 // Get flatted array, combine into company and person object
                 const [ companyAccounts, companyDates, companyMortgages, companyPreviousNames,
                     companyRegAddresses, companySICCodes, companySummaries,
-                    personAddresses, personDates, personNames, personSummaries ] = [
+                    personAddresses, personDates, personNames, personSummaries, accountDatas ] = [
                     companyAccountGroups.flat(), companyDateGroups.flat(), companyMortgageGroups.flat(),
                     companyPreviousNameGroups.flat(), companyRegAddressGroups.flat(), companySICCodeGroups.flat(),
                     companySummaryGroups.flat(), personAddressGroups.flat(), personDateGroups.flat(),
-                    personNameGroups.flat(), personSummaryGroups.flat() ];
+                    personNameGroups.flat(), personSummaryGroups.flat(), AccountDataGroups.flat() ];
 
                 const companyCount = Math.min(
                   companyAccounts.length,
@@ -354,7 +359,6 @@ module.exports = BaseController.extend({
                   companyRegAddresses.length,
                   companySICCodes.length,
                   companySummaries.length);
-
                 for (let i = 0; i < companyCount; i++) {
                     let company = {
                         ...(companyAccounts[i].toJSON()),
@@ -367,6 +371,7 @@ module.exports = BaseController.extend({
                     };
                     companyMap[company.CompanyNumber] = company;
                 }
+
                 const personCount = Math.min(
                   personAddresses.length,
                   personDates.length,
@@ -383,13 +388,20 @@ module.exports = BaseController.extend({
                     people.push(person);
                 }
 
+                for (let i = 0; i < accountDatas.length; i++) {
+                    let accountData = { ...(accountDatas[i].toJSON()) };
+                    accountDataMap[accountData.company_number] = accountData;
+                }
+
                 // Combine people array and company map
                 people.forEach(function(person) {
                     if (companyMap.hasOwnProperty(person.company_number)) {
                         let company = companyMap[person.company_number];
+                        let accountData = accountDataMap[person.company_number];
                         results.push({
                             ...company,
-                            ...person
+                            ...person,
+                            ...accountData
                         });
                     }
                 });

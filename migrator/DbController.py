@@ -9,8 +9,8 @@ class DbController(object):
 
     def connectDB(self):
         try:
-            # self.cnx = mysql.connector.connect(user='root', password='', host='127.0.0.1', database='legaldb')
-            self.cnx = mysql.connector.connect(user='root', password='o9J1DLukLy:E', host='127.0.0.1', database='legaldb')
+            self.cnx = mysql.connector.connect(user='root', password='', host='127.0.0.1', database='legaldb')
+            # self.cnx = mysql.connector.connect(user='root', password='o9J1DLukLy:E', host='127.0.0.1', database='legaldb')
             Helper.Log('Database connection success')
             return True
         except mysql.connector.Error as err:
@@ -29,7 +29,7 @@ class DbController(object):
 
     def insertCompanyData(self, record_data):
         try:
-            cursor = self.cnx.cursor()
+            cursor = self.cnx.cursor(buffered=True)
 
             add_company_query = ("INSERT INTO tbl_company (CompanyName, CompanyNumber,RegAddress_CareOf,RegAddress_POBox,"
                               "RegAddress_AddressLine1, RegAddress_AddressLine2,RegAddress_PostTown,RegAddress_County,"
@@ -58,7 +58,7 @@ class DbController(object):
 
     def insertPersonData(self, record_data):
         try:
-            cursor = self.cnx.cursor()
+            cursor = self.cnx.cursor(buffered=True)
 
             add_person_query = ("INSERT INTO tbl_person (company_number,address_line_1,address_line_2,country,locality,"
                                 "postal_code,premises,region,ceased_on,country_of_residence,date_of_birth_month,"
@@ -73,4 +73,50 @@ class DbController(object):
             cursor.close()
         except Exception as e:
             Helper.Log('Exception in insertCompanyData function ==> %s' % str(e))
+            pass
+
+    def createAccountTableIfNonExist(self, table_name):
+        try:
+            cursor = self.cnx.cursor(buffered=True)
+            check_table_query = 'SELECT 1 FROM `{0}` LIMIT 1'.format(table_name)
+            should_create_table = False
+            try:
+                cursor.execute(check_table_query, {})
+            except Exception as e:
+                error_msg_pattern = '{0}\' doesn\'t exist'.format(table_name)
+                if str(e).endswith(error_msg_pattern):
+                    should_create_table = True
+
+            if should_create_table:
+                create_table_query = 'CREATE TABLE `{0}` (' \
+                                     '`id` int(11) NOT NULL AUTO_INCREMENT, ' \
+                                     '`zip_name` varchar(255) NOT NULL, ' \
+                                     '`run_process` varchar(255) DEFAULT NULL, ' \
+                                     '`company_number` varchar(255) DEFAULT NULL, ' \
+                                     '`balance_date` varchar(8) DEFAULT NULL, ' \
+                                     '`current_assets_value` varchar(255) DEFAULT NULL, ' \
+                                     '`previous_assets_value` varchar(255) DEFAULT NULL, ' \
+                                     '`current_creditors_value` varchar(255) DEFAULT NULL, ' \
+                                     '`previous_creditors_value` varchar(255) DEFAULT NULL, ' \
+                                     'PRIMARY KEY (`id`)) ' \
+                                     'ENGINE=InnoDB DEFAULT CHARSET=utf8'.format(table_name)
+                cursor.execute(create_table_query, {})
+                self.cnx.commit()
+            cursor.close()
+        except Exception as e:
+            Helper.Log('Exception in createAccountTable function ==> %s' % str(e))
+
+    def insertAccountData(self, table_name, record_data):
+        try:
+            cursor = self.cnx.cursor(buffered=True)
+            add_account_query = ("INSERT INTO {0} (zip_name, run_process, company_number, balance_date, "
+                                 "current_assets_value, previous_assets_value, current_creditors_value, "
+                                 "previous_creditors_value) "
+                                "VALUES (%s,%s,%s,%s,%s,%s,%s,%s)".format(table_name))
+            cursor.execute(add_account_query, record_data)
+            account_no = cursor.lastrowid
+            self.cnx.commit()
+            cursor.close()
+        except Exception as e:
+            Helper.Log('Exception in insertAccountData function ==> %s' % str(e))
             pass

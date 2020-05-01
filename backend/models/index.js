@@ -20,8 +20,6 @@ db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 
 db.users = require("./admin_ms/UserModel")(sequelize, Sequelize);
-db.company = require("./CompanyModel")(sequelize, Sequelize);
-db.person = require("./PersonModel")(sequelize, Sequelize);
 
 db.company_account_5 = require("./company/Company_Account_5")(sequelize, Sequelize);
 db.company_account_10 = require("./company/Company_Account_10")(sequelize, Sequelize);
@@ -164,4 +162,5 @@ db.person_summary_65 = require("./person/Person_Summary_65")(sequelize, Sequeliz
 db.person_summary_70 = require("./person/Person_Summary_70")(sequelize, Sequelize);
 db.person_summary_75 = require("./person/Person_Summary_75")(sequelize, Sequelize);
 
+db.account_2020_04 = require("./account/AccountData202004")(sequelize, Sequelize);
 module.exports = db;

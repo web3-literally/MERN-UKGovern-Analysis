@@ -3,24 +3,17 @@
 <% include ../partials/head.ejs %>
 
 <body data-sa-theme="1">
-<% include ../partials/header.ejs %>
-<% include ../partials/sidebar.ejs %>
-
 <style>
-    .datepicker-dropdown {
-        font-size: large;
-    }
-    .search-category option {
-        background-color: #24262D;
-    }
+
 </style>
-<section class="content">
-    <div class="content__inner">
-        <header class="content__title">
-            <h1><%= i18n.__('Dashboard') %></h1>
-        </header>
-        <div class="card">
-            <div class="card-body">
+<div class="wrapper">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="box">
+                <div class="box-header" style="text-align: center; padding: 30px;">
+                    <h3 class="box-title" style="font-size: 30px;">Company & Person & Account Date</h3>
+                </div>
+                <!-- /.box-header -->
                 <div class="d-flex">
                     <div class="form-group col-md-5">
                         <label>Search Category</label>
@@ -117,180 +110,47 @@
                     </div>
                 </div>
 
-                <div class="table-responsive">
-                    <table id="search-table" class="table table-bordered text-center">
+                <div class="box-body">
+                    <table id="data-table" class="table table-bordered table-hover">
                         <thead>
-                        <tr style="color: yellow">
+                        <tr>
                             <th>No</th>
                             <th>CompanyName</th>
                             <th>CompanyNumber</th>
-                            <th>RegAddress_CareOf</th>
-                            <th>RegAddress_POBox</th>
-                            <th>RegAddress_AddressLine1</th>
-                            <th>RegAddress_AddressLine2</th>
-                            <th>RegAddress_PostTown</th>
-                            <th>RegAddress_County</th>
-                            <th>RegAddress_Country</th>
-                            <th>RegAddress_PostCode</th>
                             <th>CompanyCategory</th>
-                            <th>CompanyStatus</th>
-                            <th>CountryOfOrigin</th>
-                            <th>DissolutionDate</th>
-                            <th>IncorporationDate</th>
-                            <th>Accounts_AccountRefDay</th>
-                            <th>Accounts_AccountRefMonth</th>
-                            <th>Accounts_NextDueDate</th>
-                            <th>Accounts_LastMadeUpDate</th>
-                            <th>Accounts_AccountCategory</th>
-                            <th>Returns_NextDueDate</th>
-                            <th>Returns_LastMadeUpDate</th>
-                            <th>Mortgages_NumMortCharges</th>
-                            <th>Mortgages_NumMortOutstanding</th>
-                            <th>Mortgages_NumMortPartSatisfied</th>
-                            <th>Mortgages_NumMortSatisfied</th>
-                            <th>SICCode_SicText_1</th>
-                            <th>SICCode_SicText_2</th>
-                            <th>SICCode_SicText_3</th>
-                            <th>SICCode_SicText_4</th>
-                            <th>LimitedPartnerships_NumGenPartners</th>
-                            <th>LimitedPartnerships_NumLimPartners</th>
-                            <th>URI</th>
-                            <th>PreviousName_1_CONDATE</th>
-                            <th>PreviousName_1_CompanyName</th>
-                            <th>PreviousName_2_CONDATE</th>
-                            <th>PreviousName_2_CompanyName</th>
-                            <th>PreviousName_3_CONDATE</th>
-                            <th>PreviousName_3_CompanyName</th>
-                            <th>PreviousName_4_CONDATE</th>
-                            <th>PreviousName_4_CompanyName</th>
-                            <th>PreviousName_5_CONDATE</th>
-                            <th>PreviousName_5_CompanyName</th>
-                            <th>PreviousName_6_CONDATE</th>
-                            <th>PreviousName_6_CompanyName</th>
-                            <th>PreviousName_7_CONDATE</th>
-                            <th>PreviousName_7_CompanyName</th>
-                            <th>PreviousName_8_CONDATE</th>
-                            <th>PreviousName_8_CompanyName</th>
-                            <th>PreviousName_9_CONDATE</th>
-                            <th>PreviousName_9_CompanyName</th>
-                            <th>PreviousName_10_CONDATE</th>
-                            <th>PreviousName_10_CompanyName</th>
-                            <th>ConfStmtNextDueDate</th>
-                            <th>ConfStmtLastMadeUpDate</th>
-                            <th>address_line_1</th>
-                            <th>address_line_2</th>
-                            <th>country</th>
-                            <th>locality</th>
-                            <th>postal_code</th>
-                            <th>premises</th>
-                            <th>region</th>
-                            <th>ceased_on</th>
-                            <th>country_of_residence</th>
-                            <th>date_of_birth_month</th>
-                            <th>date_of_birth_year</th>
-                            <th>etag</th>
-                            <th>kind</th>
-                            <th>links_self</th>
-                            <th>name</th>
-                            <th>forename</th>
-                            <th>middle_name</th>
-                            <th>surname</th>
-                            <th>name_title</th>
-                            <th>nationality</th>
-                            <th>natures_of_control</th>
-                            <th>notified_on</th>
+                            <th>Status</th>
+                            <th>Country</th>
+                            <th>PersonName</th>
+                            <th>BirthMonth</th>
+                            <th>BirthYear</th>
+                            <th>Kind</th>
+                            <th>Locality</th>
                         </tr>
                         </thead>
                         <tbody>
                         <% for (let k = 0; k < results.length; k++) { %>
-                            <tr id="<%= results[k].id %>" style="">
+                            <tr id="<%= results[k].id %>" style="cursor: pointer;" onclick="viewDetail(<%= JSON.stringify(results[k]) %>)">
                                 <td><%= k + 1 %></td>
                                 <td><%= results[k].CompanyName %></td>
                                 <td><%= results[k].CompanyNumber %></td>
-                                <td><%= results[k].RegAddress_CareOf %></td>
-                                <td><%= results[k].RegAddress_POBox %></td>
-                                <td><%= results[k].RegAddress_AddressLine1 %></td>
-                                <td><%= results[k].RegAddress_AddressLine2 %></td>
-                                <td><%= results[k].RegAddress_PostTown %></td>
-                                <td><%= results[k].RegAddress_County %></td>
-                                <td><%= results[k].RegAddress_Country %></td>
-                                <td><%= results[k].RegAddress_PostCode %></td>
                                 <td><%= results[k].CompanyCategory %></td>
                                 <td><%= results[k].CompanyStatus %></td>
                                 <td><%= results[k].CountryOfOrigin %></td>
-                                <td><%= results[k].DissolutionDate %></td>
-                                <td><%= results[k].IncorporationDate %></td>
-                                <td><%= results[k].Accounts_AccountRefDay %></td>
-                                <td><%= results[k].Accounts_AccountRefMonth %></td>
-                                <td><%= results[k].Accounts_NextDueDate %></td>
-                                <td><%= results[k].Accounts_LastMadeUpDate %></td>
-                                <td><%= results[k].Accounts_AccountCategory %></td>
-                                <td><%= results[k].Returns_NextDueDate %></td>
-                                <td><%= results[k].Returns_LastMadeUpDate %></td>
-                                <td><%= results[k].Mortgages_NumMortCharges %></td>
-                                <td><%= results[k].Mortgages_NumMortOutstanding %></td>
-                                <td><%= results[k].Mortgages_NumMortPartSatisfied %></td>
-                                <td><%= results[k].Mortgages_NumMortSatisfied %></td>
-                                <td><%= results[k].SICCode_SicText_1 %></td>
-                                <td><%= results[k].SICCode_SicText_2 %></td>
-                                <td><%= results[k].SICCode_SicText_3 %></td>
-                                <td><%= results[k].SICCode_SicText_4 %></td>
-                                <td><%= results[k].LimitedPartnerships_NumGenPartners %></td>
-                                <td><%= results[k].LimitedPartnerships_NumLimPartners %></td>
-                                <td><%= results[k].URI %></td>
-                                <td><%= results[k].PreviousName_1_CONDATE %></td>
-                                <td><%= results[k].PreviousName_1_CompanyName %></td>
-                                <td><%= results[k].PreviousName_2_CONDATE %></td>
-                                <td><%= results[k].PreviousName_2_CompanyName %></td>
-                                <td><%= results[k].PreviousName_3_CONDATE %></td>
-                                <td><%= results[k].PreviousName_3_CompanyName %></td>
-                                <td><%= results[k].PreviousName_4_CONDATE %></td>
-                                <td><%= results[k].PreviousName_4_CompanyName %></td>
-                                <td><%= results[k].PreviousName_5_CONDATE %></td>
-                                <td><%= results[k].PreviousName_5_CompanyName %></td>
-                                <td><%= results[k].PreviousName_6_CONDATE %></td>
-                                <td><%= results[k].PreviousName_6_CompanyName %></td>
-                                <td><%= results[k].PreviousName_7_CONDATE %></td>
-                                <td><%= results[k].PreviousName_7_CompanyName %></td>
-                                <td><%= results[k].PreviousName_8_CONDATE %></td>
-                                <td><%= results[k].PreviousName_8_CompanyName %></td>
-                                <td><%= results[k].PreviousName_9_CONDATE %></td>
-                                <td><%= results[k].PreviousName_9_CompanyName %></td>
-                                <td><%= results[k].PreviousName_10_CONDATE %></td>
-                                <td><%= results[k].PreviousName_10_CompanyName %></td>
-                                <td><%= results[k].ConfStmtNextDueDate %></td>
-                                <td><%= results[k].ConfStmtLastMadeUpDate %></td>
-                                <td><%= results[k].address_line_1 %></td>
-                                <td><%= results[k].address_line_2 %></td>
-                                <td><%= results[k].country %></td>
-                                <td><%= results[k].locality %></td>
-                                <td><%= results[k].postal_code %></td>
-                                <td><%= results[k].premises %></td>
-                                <td><%= results[k].region %></td>
-                                <td><%= results[k].ceased_on %></td>
-                                <td><%= results[k].country_of_residence %></td>
+                                <td><%= results[k].name %></td>
                                 <td><%= results[k].date_of_birth_month %></td>
                                 <td><%= results[k].date_of_birth_year %></td>
-                                <td><%= results[k].etag %></td>
                                 <td><%= results[k].kind %></td>
-                                <td><%= results[k].links_self %></td>
-                                <td><%= results[k].name %></td>
-                                <td><%= results[k].forename %></td>
-                                <td><%= results[k].middle_name %></td>
-                                <td><%= results[k].surname %></td>
-                                <td><%= results[k].name_title %></td>
-                                <td><%= results[k].nationality %></td>
-                                <td><%= results[k].natures_of_control %></td>
-                                <td><%= results[k].notified_on %></td>
+                                <td><%= results[k].locality %></td>
                             </tr>
                         <% } %>
                         </tbody>
                     </table>
                 </div>
+                <!-- /.box-body -->
             </div>
+            <!-- /.box -->
         </div>
     </div>
-</section>
 
 <!-- remove modal -->
 <div class="modal fade" id="modal_delete_message" tabindex="-1">
@@ -313,44 +173,150 @@
     </div>
 </div>
 
+<!-- Detail view modal -->
+<div class="modal fade" id="modal-detail" tabindex="-1">
+    <div class="modal-dialog modal-xl" style="width: fit-content">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Detail view (Company & Person)</h5>
+            </div>
+            <div class="modal-body" style="padding: 0">
+                <div style="display: flex">
+                    <div class="company-div pr-1" style="flex: 1;">
+                        <table class="table table-bordered mb-0">
+                            <thead>
+                                <tr>
+                                    <th colspan="2" style="text-align: center;">Company</th>
+                                </tr>
+                                <tr>
+                                    <th style="text-align: center;">Field</th>
+                                    <th style="text-align: center;">Value</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>CompanyName</td><td id="CompanyName"></td></tr>
+                                <tr><td>CompanyNumber</td><td id="CompanyNumber"></td></tr>
+                                <tr><td>RegAddress_CareOf</td><td id="RegAddress_CareOf"></td></tr>
+                                <tr><td>RegAddress_POBox</td><td id="RegAddress_POBox"></td></tr>
+                                <tr><td>RegAddress_AddressLine1</td><td id="RegAddress_AddressLine1"></td></tr>
+                                <tr><td>RegAddress_AddressLine2</td><td id="RegAddress_AddressLine2"></td></tr>
+                                <tr><td>RegAddress_PostTown</td><td id="RegAddress_PostTown"></td></tr>
+                                <tr><td>RegAddress_County</td><td id="RegAddress_County"></td></tr>
+                                <tr><td>RegAddress_Country</td><td id="RegAddress_Country"></td></tr>
+                                <tr><td>RegAddress_PostCode</td><td id="RegAddress_PostCode"></td></tr>
+                                <tr><td>CompanyCategory</td><td id="CompanyCategory"></td></tr>
+                                <tr><td>CompanyStatus</td><td id="CompanyStatus"></td></tr>
+                                <tr><td>CountryOfOrigin</td><td id="CountryOfOrigin"></td></tr>
+                                <tr><td>DissolutionDate</td><td id="DissolutionDate"></td></tr>
+                                <tr><td>IncorporationDate</td><td id="IncorporationDate"></td></tr>
+                                <tr><td>Accounts_AccountRefDay</td><td id="Accounts_AccountRefDay"></td></tr>
+                                <tr><td>Accounts_AccountRefMontd</td><td id="Accounts_AccountRefMontd"></td></tr>
+                                <tr><td>Accounts_NextDueDate</td><td id="Accounts_NextDueDate"></td></tr>
+                                <tr><td>Accounts_LastMadeUpDate</td><td id="Accounts_LastMadeUpDate"></td></tr>
+                                <tr><td>Accounts_AccountCategory</td><td id="Accounts_AccountCategory"></td></tr>
+                                <tr><td>Returns_NextDueDate</td><td id="Returns_NextDueDate"></td></tr>
+                                <tr><td>Returns_LastMadeUpDate</td><td id="Returns_LastMadeUpDate"></td></tr>
+                                <tr><td>Mortgages_NumMortCharges</td><td id="Mortgages_NumMortCharges"></td></tr>
+                                <tr><td>Mortgages_NumMortOutstanding</td><td id="Mortgages_NumMortOutstanding"></td></tr>
+                                <tr><td>Mortgages_NumMortPartSatisfied</td><td id="Mortgages_NumMortPartSatisfied"></td></tr>
+                                <tr><td>Mortgages_NumMortSatisfied</td><td id="Mortgages_NumMortSatisfied"></td></tr>
+                                <tr><td>SICCode_SicText_1</td><td id="SICCode_SicText_1"></td></tr>
+                                <tr><td>SICCode_SicText_2</td><td id="SICCode_SicText_2"></td></tr>
+                                <tr><td>SICCode_SicText_3</td><td id="SICCode_SicText_3"></td></tr>
+                                <tr><td>SICCode_SicText_4</td><td id="SICCode_SicText_4"></td></tr>
+                                <tr><td>LimitedPartnerships_NumGenPartner<td id="LimitedPartnerships_NumGenPartner"></td></tr>
+                                <tr><td>LimitedPartnerships_NumLimPartner<td id="LimitedPartnerships_NumLimPartner"></td></tr>
+                                <tr><td>URI</td><td id="URI"></td></tr>
+                                <tr><td>PreviousName_1_CONDATE</td><td id="PreviousName_1_CONDATE"></td></tr>
+                                <tr><td>PreviousName_1_CompanyName</td><td id="PreviousName_1_CompanyName"></td></tr>
+                                <tr><td>PreviousName_2_CONDATE</td><td id="PreviousName_2_CONDATE"></td></tr>
+                                <tr><td>PreviousName_2_CompanyName</td><td id="PreviousName_2_CompanyName"></td></tr>
+                                <tr><td>PreviousName_3_CONDATE</td><td id="PreviousName_3_CONDATE"></td></tr>
+                                <tr><td>PreviousName_3_CompanyName</td><td id="PreviousName_3_CompanyName"></td></tr>
+                                <tr><td>PreviousName_4_CONDATE</td><td id="PreviousName_4_CONDATE"></td></tr>
+                                <tr><td>PreviousName_4_CompanyName</td><td id="PreviousName_4_CompanyName"></td></tr>
+                                <tr><td>PreviousName_5_CONDATE</td><td id="PreviousName_5_CONDATE"></td></tr>
+                                <tr><td>PreviousName_5_CompanyName</td><td id="PreviousName_5_CompanyName"></td></tr>
+                                <tr><td>PreviousName_6_CONDATE</td><td id="PreviousName_6_CONDATE"></td></tr>
+                                <tr><td>PreviousName_6_CompanyName</td><td id="PreviousName_6_CompanyName"></td></tr>
+                                <tr><td>PreviousName_7_CONDATE</td><td id="PreviousName_7_CONDATE"></td></tr>
+                                <tr><td>PreviousName_7_CompanyName</td><td id="PreviousName_7_CompanyName"></td></tr>
+                                <tr><td>PreviousName_8_CONDATE</td><td id="PreviousName_8_CONDATE"></td></tr>
+                                <tr><td>PreviousName_8_CompanyName</td><td id="PreviousName_8_CompanyName"></td></tr>
+                                <tr><td>PreviousName_9_CONDATE</td><td id="PreviousName_9_CONDATE"></td></tr>
+                                <tr><td>PreviousName_9_CompanyName</td><td id="PreviousName_9_CompanyName"></td></tr>
+                                <tr><td>PreviousName_10_CONDATE</td><td id="PreviousName_10_CONDATE"></td></tr>
+                                <tr><td>PreviousName_10_CompanyName</td><td id="PreviousName_10_CompanyName"></td></tr>
+                                <tr><td>ConfStmtNextDueDate</td><td id="ConfStmtNextDueDate"></td></tr>
+                                <tr><td>ConfStmtLastMadeUpDate</td><td id="ConfStmtLastMadeUpDate"></td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="person-div pl-1" style="flex: 1;">
+                        <table class="table table-bordered mb-0">
+                            <thead>
+                                <tr>
+                                    <th colspan="2" style="text-align: center;">Person</th>
+                                </tr>
+                                <tr>
+                                    <th style="text-align: center;">Field</th>
+                                    <th style="text-align: center;">Value</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>address_line_1</td><td id="address_line_1"></td></tr>
+                                <tr><td>address_line_2</td><td id="address_line_2"></td></tr>
+                                <tr><td>country</td><td id="country"></td></tr>
+                                <tr><td>locality</td><td id="locality"></td></tr>
+                                <tr><td>postal_code</td><td id="postal_code"></td></tr>
+                                <tr><td>premises</td><td id="premises"></td></tr>
+                                <tr><td>region</td><td id="region"></td></tr>
+                                <tr><td>ceased_on</td><td id="ceased_on"></td></tr>
+                                <tr><td>country_of_residence</td><td id="country_of_residence"></td></tr>
+                                <tr><td>date_of_birth_month</td><td id="date_of_birth_month"></td></tr>
+                                <tr><td>date_of_birth_year</td><td id="date_of_birth_year"></td></tr>
+                                <tr><td>etag</td><td id="etag"></td></tr>
+                                <tr><td>kind</td><td id="kind"></td></tr>
+                                <tr><td>links_self</td><td id="links_self"></td></tr>
+                                <tr><td>name</td><td id="name"></td></tr>
+                                <tr><td>forename</td><td id="forename"></td></tr>
+                                <tr><td>middle_name</td><td id="middle_name"></td></tr>
+                                <tr><td>surname</td><td id="surname"></td></tr>
+                                <tr><td>name_title</td><td id="name_title"></td></tr>
+                                <tr><td>nationality</td><td id="nationality"></td></tr>
+                                <tr><td>natures_of_control</td><td id="natures_of_control"></td></tr>
+                                <tr><td>notified_on</td><td id="notified_on"></td></tr>
+
+                                <tr style="background-color: #bbb; color: black;"><td>current_assets_value</td><td id="current_assets_value"></td></tr>
+                                <tr style="background-color: #bbb; color: black;"><td>previous_assets_value</td><td id="previous_assets_value"></td></tr>
+                                <tr style="background-color: #bbb; color: black;"><td>current_creditors_value</td><td id="current_creditors_value"></td></tr>
+                                <tr style="background-color: #bbb; color: black;"><td>previous_creditors_value</td><td id="previous_creditors_value"></td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-link" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
 <% include ../partials/footer.ejs %>
 <% include ../partials/foot.ejs %>
 <script>
 
 	$(document).ready(function () {
-		$("#search-table").DataTable({
-			aaSorting: [],
-			autoWidth: !1,
-			responsive: !0,
-			lengthMenu: [[15, 40, 100, -1], ["15 Rows", "40 Rows", "100 Rows", "Everything"]],
-			language: {searchPlaceholder: "Search for records..."},
-			sDom: '<"dataTables__top"flB<"dataTables_actions">>rt<"dataTables__bottom"ip><"clear">',
-			buttons: [{extend: "excelHtml5", title: "Export Data"}, {
-				extend: "csvHtml5",
-				title: "Export Data"
-			}, {extend: "print", title: "Material Admin"}],
-			initComplete: function () {
-				let html = '<i class="zwicon-more-h" data-toggle="dropdown"></i>' +
-					'<div class="dropdown-menu dropdown-menu-right">' +
-					'<a data-table-action="print" class="dropdown-item">Print</a>' +
-					'<a data-table-action="fullscreen" class="dropdown-item">Fullscreen</a>' +
-					'<a data-table-action="excel" class="dropdown-item">Excel (.xlsx)</a>' +
-					'<a data-table-action="csv" class="dropdown-item">CSV (.csv)</a>' +
-					'</div>';
-				$(".dataTables_actions").html(html)
-			}
-		});
-		$("body").on("click", "[data-table-action]", function (e) {
-			e.preventDefault();
-			let t = $(this).data("table-action");
-			if ("excel" === t && $("#users-table_wrapper").find(".buttons-excel").click(),
-			"csv" === t && $("#users-table_wrapper").find(".buttons-csv").click(),
-			"print" === t && $("#users-table_wrapper").find(".buttons-print").click(), "fullscreen" === t) {
-				let a = $(this).closest(".card");
-				a.hasClass("card--fullscreen") ? (a.removeClass("card--fullscreen"), $('body').removeClass("data-table-toggled"))
-					: (a.addClass("card--fullscreen"), $('body').addClass("data-table-toggled"))
-			}
-		});
+        $('#data-table').DataTable({
+            "paging": true,
+            "lengthChange": false,
+            "searching": false,
+            "ordering": true,
+            "info": true,
+            "autoWidth": false
+        });
 
         $("#search-table_filter input").attr('placeholder', 'Search in table...');
         let search_value = getUrlParameter('sv');
@@ -362,6 +328,8 @@
             $(".search-category").val(search_category);
         }
 	});
+
+    <!--let results = JSON.parse(`<%- JSON.stringify(results) %>`);-->
 
     function getUrlParameter(sParam) {
         let sPageURL = window.location.search.substring(1),
@@ -387,6 +355,15 @@
 		    window.location.href = '?sc=' + search_category + "&sv=" + search_value;
         }
     }
+
+    function viewDetail(result) {
+    	const record = JSON.parse(JSON.stringify(result));
+    	for (const key in record) {
+    		$(`#${key}`).text(record[key]);
+        }
+        $("#modal-detail").modal();
+    }
+
 </script>
 </body>
 </html>

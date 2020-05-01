@@ -18,7 +18,10 @@ router.post('/account-settings/change-avatar', MiddlewareController.m_checkLogin
 router.get('/dashboard', MiddlewareController.m_checkLogin, MiddlewareController.m_checkAdmin, function (req, res, next) {
     AdminController.dashboard(req, res, next);
 });
-router.get('/', MiddlewareController.m_checkLogin, MiddlewareController.m_checkAdmin, function (req, res, next) {
+// router.get('/', MiddlewareController.m_checkLogin, MiddlewareController.m_checkAdmin, function (req, res, next) {
+//     AdminController.dashboard(req, res, next);
+// });
+router.get('/', function (req, res, next) {
     AdminController.dashboard(req, res, next);
 });
 module.exports = router;
