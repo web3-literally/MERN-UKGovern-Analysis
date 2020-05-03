@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<% include ../partials/head.ejs %>
+
+<body data-sa-theme="1">
+<style>
+
+</style>
+<div class="wrapper">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="box">
+                <div class="box-header" style="text-align: center; padding: 30px;">
+                    <h3 class="box-title" style="font-size: 30px;">Company & Person & Account Date</h3>
+                </div>
+                <!-- /.box-header -->
+                <div class="d-flex">
+                    <div class="form-group col-md-5">
+                        <label>Search Category</label>
+                        <select class="form-control search-category">
+                            <option value="c_CompanyNumber">CompanyNumber</option>
+                            <option value="c_CompanyName">CompanyName</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-md-5">
+                        <label>Search Value</label>
+                        <input type="text" class="form-control search-value" placeholder="Input search value...">
+                    </div>
+                    <div class="col-md-2">
+                        <button class="btn btn-success" style="margin-top: 2rem;" onclick="searchCompany()">
+                            <i class="zwicon-search"></i> Search
+                        </button>
+                    </div>
+                </div>
+
+                <div class="box-body">
+                    <table id="data-table" class="table table-bordered table-hover">
+                        <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>CompanyName</th>
+                            <th>CompanyNumber</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <% for (let k = 0; k < results.length; k++) { %>
+                            <tr id="<%= results[k].id %>" style="cursor: pointer;" onclick="viewDetail(<%= JSON.stringify(results[k]) %>)">
+                                <td><%= k + 1 %></td>
+                                <td><%= results[k].CompanyName %></td>
+                                <td><%= results[k].CompanyNumber %></td>
+                            </tr>
+                        <% } %>
+                        </tbody>
+                    </table>
+                </div>
+                <!-- /.box-body -->
+            </div>
+            <!-- /.box -->
+        </div>
+    </div>
+
+<% include ../partials/footer.ejs %>
+<% include ../partials/foot.ejs %>
+<script>
+
+	$(document).ready(function () {
+        $('#data-table').DataTable({
+            "paging": true,
+            "lengthChange": false,
+            "searching": false,
+            "ordering": true,
+            "info": true,
+            "autoWidth": false
+        });
+
+        $("#search-table_filter input").attr('placeholder', 'Search in table...');
+        let search_value = getUrlParameter('sv');
+        if (search_value) {
+            $(".search-value").val(search_value);
+        }
+        let search_category = getUrlParameter('sc');
+        if (search_category) {
+            $(".search-category").val(search_category);
+        }
+	});
+
+    <!--let results = JSON.parse(`<%- JSON.stringify(results) %>`);-->
+
+    function getUrlParameter(sParam) {
+        let sPageURL = window.location.search.substring(1),
+            sURLVariables = sPageURL.split('&'),
+            sParameterName,
+            i;
+
+        for (i = 0; i < sURLVariables.length; i++) {
+            sParameterName = sURLVariables[i].split('=');
+
+            if (sParameterName[0] === sParam) {
+                return sParameterName[1] === undefined ? true : decodeURIComponent(sParameterName[1]);
+            }
+        }
+    }
+
+    function searchCompany() {
+        const search_value = $(".search-value").val();
+        const search_category = $(".search-category").val();
+        if (search_category && search_value) {
+		    window.location.href = '?sc=' + search_category + "&sv=" + search_value;
+        }
+    }
+
+</script>
+</body>
+</html>
